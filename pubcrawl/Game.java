@@ -1,8 +1,6 @@
 /**
- *  This was World of Zuul, now it is PubCrawl. Your goal is to drink beer and get home
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  This was World of Zuul, now it is PubCrawl. Your goal is to drink beer at all the 
+ *  pubs and get home with money still in your pocket. Beware not every place you go into is a pub.
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
@@ -83,8 +81,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to Pub Crawl!"
+        System.out.println("Pub Crawl is a very easy game. You leave work with money and your goal is to go to each pub and drink beer and return home with money in your pocket")
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("You are " + currentRoom.getDescription());
@@ -142,7 +140,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around at work.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
@@ -178,7 +176,7 @@ public class Game
         }
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is no door! You must be drunk!");
         }
         else {
             currentRoom = nextRoom;
