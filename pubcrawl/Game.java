@@ -1,5 +1,5 @@
 /**
- *  This class is the main class of the "World of Zuul" application. 
+ *  This was World of Zuul, now it is PubCrawl. Your goal is to drink beer and get home
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
  *  can walk around some scenery. That's all. It should really be extended 
  *  to make it more interesting!
@@ -11,8 +11,8 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author  Ann Wallace (was Michael Kölling and David J. Barnes)
+ * @version 20150401
  */
 
 public class Game 
