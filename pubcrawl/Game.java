@@ -81,8 +81,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to Pub Crawl!"
-        System.out.println("Pub Crawl is a very easy game. You leave work with money and your goal is to go to each pub and drink beer and return home with money in your pocket")
+        System.out.println("Welcome to Pub Crawl!");
+;
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println("You are " + currentRoom.getDescription());
