@@ -17,6 +17,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Wallet wallet;
         
     /**
      * Create the game and initialise its internal map.
@@ -25,6 +26,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        wallet = new Wallet(100);
     }
 
     /**
@@ -92,8 +94,8 @@ public class Game
     {
         System.out.println();
         System.out.println("Welcome to Pub Crawl!");
-;
         System.out.println("Type 'help' if you need help.");
+        printWalletBalance();
         System.out.println();
         printLocationInfo();
     }
@@ -140,6 +142,13 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
+    }
+    
+    /**
+     * Print out the balance in the wallet
+     */
+    private void printWalletBalance() {
+        System.out.println("You have $" + wallet.getMoney() +" in your wallet.");
     }
 
     /** 
