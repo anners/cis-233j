@@ -5,15 +5,16 @@
  * This class holds an enumeration of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author ann wallace  (was Michael Kölling and David J. Barnes)
+ * @version 2015.04.11
  */
 
 public class CommandWords
 {
     // a constant array that holds all valid command words
+    // 6.15 added look
     private static final String[] validCommands = {
-        "go", "quit", "help"
+        "go", "quit", "help", "look", "drink", "balance"
     };
 
     /**
@@ -22,6 +23,20 @@ public class CommandWords
     public CommandWords()
     {
         // nothing to do at the moment...
+    }
+    
+    /**
+     * Print all vaild commands to stdout 
+     * exercise 6.16 and 18
+     * @return String of commands
+     */
+    public String getCommands() {
+        
+       String allCommands = new String();
+       for(String command : validCommands) {
+             allCommands += command + " ";
+        }
+        return allCommands;
     }
 
     /**

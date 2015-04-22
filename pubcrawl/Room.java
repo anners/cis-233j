@@ -19,6 +19,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private Item item;
 
 
     /**
@@ -31,6 +32,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+      
     }
 
     /**
@@ -41,6 +43,22 @@ public class Room
     public void setExit(String direction, Room neighbor) 
     {
         exits.put(direction, neighbor);
+    }
+    
+    /**
+     * Create an item in a room
+     * @param item - description and price
+     */
+    public void addItem(String description, double price) {
+        item = new Item(description, price);
+    }
+    
+    /**
+     * Return a description of the item in the room
+     * @return a string with the desription and the price of the item
+     */ 
+    public String getItemDescription() {
+        return "the item is " + item.getDescription() + " and cost $" + item.getPrice();
     }
     
     /**

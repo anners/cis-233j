@@ -11,6 +11,9 @@ import org.junit.Test;
  */
 public class SalesItemTest
 {
+    private SalesItem salesIte1;
+    private SalesItem salesIte2;
+
     /**
      * Default constructor for test class SalesItemTest
      */
@@ -26,6 +29,10 @@ public class SalesItemTest
     @Before
     public void setUp()
     {
+        salesIte1 = new SalesItem("blah", 1);
+        salesIte2 = new SalesItem("booger", 100);
+        salesIte1.addComment("ann", "yadda", 1);
+        salesIte1.addComment("heas", "fucker", 10);
     }
 
     /**
@@ -48,6 +55,14 @@ public class SalesItemTest
         assertEquals(true, salesIte1.addComment("James Duckling", "This book is great. I learned all my Java from it.", 4));
         assertEquals(1, salesIte1.getNumberOfComments());
     }
+    
+    @Test
+    public void testDuplicateUserComment() {
+        SalesItem salesIte1 = new SalesItem("C forever", 1);
+        salesIte1.addComment("heasus", "I love this book", 5);
+        assertEquals(false, salesIte1.addComment("heasus", "Booger", 1));
+    }
+        
 
     /**
      * Test that a comment using an illegal rating value is rejected.
@@ -69,6 +84,9 @@ public class SalesItemTest
         assertEquals("test name", salesIte1.getName());
         assertEquals(1000, salesIte1.getPrice());
     }
+
+
 }
+
 
 

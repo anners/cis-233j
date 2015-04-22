@@ -29,6 +29,14 @@ public class Parser
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
+    
+    /**
+     * print out a list of valid command works
+     * exercise 6.16 and 6.18
+     */
+    public String showCommands() {
+       return  commands.getCommands();
+    }
 
     /**
      * @return The next command from the user.

@@ -1,5 +1,6 @@
+import java.util.Stack;
 /**
- *  This was World of Zuul, now it is PubCrawl. Your goal is to drink beer at all the 
+*  This was World of Zuul, now it is PubCrawl. Your goal is to drink beer at all the 
  *  pubs and get home with money still in your pocket. Beware not every place you go into is a pub.
  * 
  *  To play this game, create an instance of this class and call the "play"
@@ -17,7 +18,9 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Stack<Room> previousRoom;
     private Wallet wallet;
+    
         
     /**
      * Create the game and initialise its internal map.
@@ -26,7 +29,9 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        // start out with $100
         wallet = new Wallet(100);
+        previousRoom = new Stack<Room>();
     }
 
     /**
@@ -35,6 +40,7 @@ public class Game
     private void createRooms()
     {
         Room work, pp, gdPub, gym, bsPub, hbPub, aPub, home;
+        Item laptop, gum, dmIPA, clifBar, cruxIPA, boneyardIPA, rrStout, bed, towel;
       
         // create the rooms
         work = new Room("inside your boring office");
@@ -46,15 +52,35 @@ public class Game
         aPub = new Room("in the apex pub");
         home = new Room("in your house");
         
-        // add items to the rooms
-        work.addItem("a laptop", 1000.00);
-        pp.addItem("a pack of gum", 1.00);
-        gdPub.addItem("a double mountain IPA", 5.00);
-        gym.addItem("a Clif Bar", 2.00);
-        bsPub.addItem("a Crux Double IPA", 8.00);
-        hbPub.addItem("a Boneyard RPM", 4.00);
-        aPub.addItem("a Russian River Stout", 6.50);
-        home.addItem("a bed", 0.00);
+        // create items
+        laptop = new Item("a macbook pro", 1000.00);
+        gum = new Item("a pack of gum", 1.00);
+        dmIPA = new Item("a double mountain IPA", 5.00);
+        clifBar = new Item("a Peanut Butter Clif Bar", 2.00);
+        cruxIPA = new Item("a Crux Double IPA", 8.00);
+        boneyardIPA = new Item("a Boneyard RPM", 4.00);
+        rrStout = new Item("a Russian River Stout", 6.50);
+        bed = new Item("a nice comfy bed", 0.00);
+        towel = new Item("a towel for the shower", 5.00);
+        
+        
+        //add items to rooms
+        work.addItem("laptop", laptop);
+        pp.addItem("gum", gum);
+        pp.addItem("trail bar", clifBar);
+        gdPub.addItem("beer 1", dmIPA);
+        gdPub.addItem("beer 2", cruxIPA);
+        gdPub.addItem("beer 3", rrStout);
+        bsPub.addItem("beer 1", dmIPA);
+        bsPub.addItem("beer 2", cruxIPA);
+        bsPub.addItem("beer 3", boneyardIPA);
+        hbPub.addItem("beer 1", rrStout);
+        hbPub.addItem("beer 2", cruxIPA);
+        hbPub.addItem("beer 3", boneyardIPA);
+        aPub.addItem("beer 1", rrStout);
+        aPub.addItem("beer 2", cruxIPA);
+        gym.addItem("towel", towel);
+        home.addItem("bed", bed);
         
         // initialise room exits (Room north, Room east, Room south, Room west) 
         work.setExit("east", gdPub);
@@ -76,7 +102,8 @@ public class Game
         aPub.setExit("west", hbPub);
         home.setExit("north", hbPub);
         
-        currentRoom = work;  // start game work
+        currentRoom = work;  // start game at work
+        
     }
 
     /**
@@ -141,6 +168,9 @@ public class Game
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
+        else if (commandWord.equals("back")) {
+            goBackRoom(command);
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -200,6 +230,23 @@ public class Game
         System.out.println("You have $" + wallet.getMoney() +" in your wallet.");
     }
 
+    /**
+     * Go back to the previous room, if there wasn't a previous room print an error
+     */
+    private void goBackRoom(Command command) {
+        if(command.hasSecondWord()) {
+            System.out.println("What???? If you want to go back, simply type back");
+            return;
+        }else if (previousRoom.empty()) {
+            System.out.println("There is no where to go back to.");
+            return;
+        } else {
+            currentRoom = previousRoom.pop();
+            printLocationInfo();
+            printItemInfo();
+        }
+    }
+            
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
@@ -221,6 +268,7 @@ public class Game
             System.out.println("There is no door! You must be drunk!");
         }
         else {
+            previousRoom.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
             printItemInfo();

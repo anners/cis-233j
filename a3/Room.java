@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -12,14 +13,14 @@ import java.util.Set;
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author  ann wallace (was Michael Kölling and David J. Barnes)
+ * @version 2015.04.17
  */
 public class Room 
 {
     private String description;
     private HashMap<String, Room> exits;
-    private Item item;
+    private ArrayList<Item> items;
 
 
     /**
@@ -32,6 +33,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        items = new ArrayList<Item>();
       
     }
 
@@ -49,8 +51,16 @@ public class Room
      * Create an item in a room
      * @param item - description and price
      */
-    public void addItem(String description, double price) {
-        item = new Item(description, price);
+    public void addItem(String name, Item newItem) {
+        items.add(newItem);
+    }
+    
+    /**
+     * Return all the items in a room
+     * @return a list of items
+     */
+    public ArrayList getItems() {
+        return items;
     }
     
     /**
@@ -58,7 +68,11 @@ public class Room
      * @return a string with the desription and the price of the item
      */ 
     public String getItemDescription() {
-        return "the item is " + item.getDescription() + " and cost $" + item.getPrice();
+        String msg = new String("Items are: \n");
+        for(Item item : items) {
+            msg += item.getDescription() + " that cost $" + item.getPrice() + "\n";
+        }
+        return msg;
     }
     
     /**

@@ -46,6 +46,16 @@ public class Game
         aPub = new Room("in the apex pub");
         home = new Room("in your house");
         
+        // add items to the rooms
+        work.addItem("a laptop", 1000.00);
+        pp.addItem("a pack of gum", 1.00);
+        gdPub.addItem("a double mountain IPA", 5.00);
+        gym.addItem("a Clif Bar", 2.00);
+        bsPub.addItem("a Crux Double IPA", 8.00);
+        hbPub.addItem("a Boneyard RPM", 4.00);
+        aPub.addItem("a Russian River Stout", 6.50);
+        home.addItem("a bed", 0.00);
+        
         // initialise room exits (Room north, Room east, Room south, Room west) 
         work.setExit("east", gdPub);
         work.setExit("south", hbPub);
@@ -102,6 +112,7 @@ public class Game
 
     /**
      * Given a command, process (that is: execute) the command.
+     * 6.14 added look command
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
@@ -118,6 +129,15 @@ public class Game
         if (commandWord.equals("help")) {
             printHelp();
         }
+        else if (commandWord.equals("look")) {
+            look();
+        }
+        else if (commandWord.equals("drink")) {
+            drink();
+        }
+        else if (commandWord.equals("balance")) {
+            printWalletBalance();
+        }
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
@@ -127,6 +147,33 @@ public class Game
 
         return wantToQuit;
     }
+    
+    /**
+     * Print out the current room description 
+     * exercise 6.14 - this is a duplication of printLocationInfo() BAD DESIGN 
+     * @return nothing 
+     */
+    private void look () {
+        System.out.println(currentRoom.getLongDescription());
+    }
+    
+    /**
+     * stub method for drinking beer 
+     * for now it just prints out you aren't thristy 
+     * TODO - drink beer
+     */
+    private void drink () {
+        System.out.println("You aren't thristy, try again later");
+    }
+    
+    /**
+     * prints out information about items in the room
+     * exercise 6.20
+     * @return nothing
+     */
+    private void printItemInfo() {
+        System.out.println(currentRoom.getItemDescription());
+    }
 
     // implementations of user commands:
 
@@ -134,6 +181,7 @@ public class Game
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
      * command words.
+     * updated for exercise 6.16 and 6.18
      */
     private void printHelp() 
     {
@@ -141,11 +189,12 @@ public class Game
         System.out.println("around at work.");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("   go quit help");
+        System.out.println(parser.showCommands());
     }
     
     /**
      * Print out the balance in the wallet
+     * exercise 6.15
      */
     private void printWalletBalance() {
         System.out.println("You have $" + wallet.getMoney() +" in your wallet.");
@@ -174,6 +223,7 @@ public class Game
         else {
             currentRoom = nextRoom;
             printLocationInfo();
+            printItemInfo();
         }
     }
 
@@ -199,6 +249,6 @@ public class Game
      */
      private void printLocationInfo(){
          System.out.println(currentRoom.getLongDescription());
-        }
+    }
 
 }

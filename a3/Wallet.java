@@ -46,9 +46,9 @@ public class Wallet
      * @throws XX if cash is > than money in the wallet
      */
     public void removeMoney(int cash) {
-        // TODO throw an error if cash is > money
+        
         if (cash > money) {
-            throw new IllegalArgumentException ("You cannot remove more money that you have in your wallet.");
+            throw new IllegalArgumentException ("You cannot remove more money than you have in your wallet.");
         } else {
         money -= cash;
         }
