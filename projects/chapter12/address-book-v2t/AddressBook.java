@@ -36,7 +36,12 @@ public class AddressBook
      */
     public ContactDetails getDetails(String key)
     {
-        return book.get(key);
+        if(key == null) {
+            throw new IllegalArgumentException("null key in getDetails");
+        } else {
+            return book.get(key);
+        }
+      
     }
 
     /**
@@ -86,6 +91,7 @@ public class AddressBook
      */
     public ContactDetails[] search(String keyPrefix)
     {
+
         // Build a list of the matches.
         List<ContactDetails> matches = new LinkedList<ContactDetails>();
         if(keyPrefix != null) {
@@ -106,7 +112,11 @@ public class AddressBook
         }
         ContactDetails[] results = new ContactDetails[matches.size()];
         matches.toArray(results);
-        return results;
+        if (results != null) {
+            return results;
+        } else {
+            return null;
+        }
     }
 
     /**

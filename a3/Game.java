@@ -19,7 +19,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> previousRoom;
-    private Wallet wallet;
+    private Player player1;
     
         
     /**
@@ -29,8 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        // start out with $100
-        wallet = new Wallet(100);
+        player1 = new Player("Player 1");
         previousRoom = new Stack<Room>();
     }
 
@@ -130,6 +129,7 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
+        System.out.println("Hello " + player1.getName());
         System.out.println("Welcome to Pub Crawl!");
         System.out.println("Type 'help' if you need help.");
         printWalletBalance();
@@ -227,7 +227,7 @@ public class Game
      * exercise 6.15
      */
     private void printWalletBalance() {
-        System.out.println("You have $" + wallet.getMoney() +" in your wallet.");
+        System.out.println("You have " + player1.getWalletTotal() +" in your wallet.");
     }
 
     /**
