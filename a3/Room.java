@@ -36,6 +36,12 @@ public class Room
         items = new ArrayList<Item>();
       
     }
+    
+    /**
+     * Create an empty room
+     */
+    public Room() {
+    }
 
     /**
      * Define the exits of this room.  
@@ -51,7 +57,7 @@ public class Room
      * Create an item in a room
      * @param item - description and price
      */
-    public void addItem(String name, Item newItem) {
+    public void addItem(Item newItem) {
         items.add(newItem);
     }
     
@@ -59,7 +65,7 @@ public class Room
      * Return all the items in a room
      * @return a list of items
      */
-    public ArrayList getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
     
@@ -69,8 +75,10 @@ public class Room
      */ 
     public String getItemDescription() {
         String msg = new String("Items are: \n");
+        int i = 1;
         for(Item item : items) {
-            msg += item.getDescription() + " that cost $" + item.getPrice() + "\n";
+            msg += i + ". " + item.getDescription() + " that cost $" + item.getPrice() + "\n";
+            i++;
         }
         return msg;
     }
@@ -110,10 +118,12 @@ public class Room
      * return a long description of this room, of the form:
      *  You are in the kitchen.
      *  Exits: north south
+     *  Items : XXXXX
      * @return a description of the room, including exits
      */
     public String getLongDescription() {
-        return "you are " + description + ".\n" + getExitString();
+        return "you are " + description + ".\n" + getExitString() + 
+        "\n" + getItemDescription();
     }
 
 }

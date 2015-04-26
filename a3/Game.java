@@ -17,9 +17,9 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
     private Stack<Room> previousRoom;
     private Player player1;
+   
     
         
     /**
@@ -40,6 +40,7 @@ public class Game
     {
         Room work, pp, gdPub, gym, bsPub, hbPub, aPub, home;
         Item laptop, gum, dmIPA, clifBar, cruxIPA, boneyardIPA, rrStout, bed, towel;
+        
       
         // create the rooms
         work = new Room("inside your boring office");
@@ -64,22 +65,22 @@ public class Game
         
         
         //add items to rooms
-        work.addItem("laptop", laptop);
-        pp.addItem("gum", gum);
-        pp.addItem("trail bar", clifBar);
-        gdPub.addItem("beer 1", dmIPA);
-        gdPub.addItem("beer 2", cruxIPA);
-        gdPub.addItem("beer 3", rrStout);
-        bsPub.addItem("beer 1", dmIPA);
-        bsPub.addItem("beer 2", cruxIPA);
-        bsPub.addItem("beer 3", boneyardIPA);
-        hbPub.addItem("beer 1", rrStout);
-        hbPub.addItem("beer 2", cruxIPA);
-        hbPub.addItem("beer 3", boneyardIPA);
-        aPub.addItem("beer 1", rrStout);
-        aPub.addItem("beer 2", cruxIPA);
-        gym.addItem("towel", towel);
-        home.addItem("bed", bed);
+        work.addItem(laptop);
+        pp.addItem( gum);
+        pp.addItem(clifBar);
+        gdPub.addItem(dmIPA);
+        gdPub.addItem(cruxIPA);
+        gdPub.addItem(rrStout);
+        bsPub.addItem(dmIPA);
+        bsPub.addItem(cruxIPA);
+        bsPub.addItem(boneyardIPA);
+        hbPub.addItem(rrStout);
+        hbPub.addItem(cruxIPA);
+        hbPub.addItem(boneyardIPA);
+        aPub.addItem(rrStout);
+        aPub.addItem(cruxIPA);
+        gym.addItem(towel);
+        home.addItem(bed);
         
         // initialise room exits (Room north, Room east, Room south, Room west) 
         work.setExit("east", gdPub);
@@ -101,7 +102,7 @@ public class Game
         aPub.setExit("west", hbPub);
         home.setExit("north", hbPub);
         
-        currentRoom = work;  // start game at work
+        player1.setRoom(work);  // start game at work
         
     }
 
@@ -132,9 +133,9 @@ public class Game
         System.out.println("Hello " + player1.getName());
         System.out.println("Welcome to Pub Crawl!");
         System.out.println("Type 'help' if you need help.");
-        printWalletBalance();
         System.out.println();
         printLocationInfo();
+        printWalletBalance();
     }
 
     /**
@@ -162,6 +163,9 @@ public class Game
         else if (commandWord.equals("drink")) {
             drink();
         }
+        else if (commandWord.equals("buy")) {
+            buy(command);
+        }
         else if (commandWord.equals("balance")) {
             printWalletBalance();
         }
@@ -184,7 +188,28 @@ public class Game
      * @return nothing 
      */
     private void look () {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player1.getRoom().getLongDescription());
+    }
+
+    /**
+     * stub method for buying an item
+     */
+    private void buy (Command command) {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what item to buy...
+            System.out.println("Buy what?");
+            System.out.println("Please enter an item number");
+            return;
+        }
+        
+        int itemNumber;
+        try { 
+            itemNumber = Integer.parseInt(command.getSecondWord());
+            Item item = player1.getRoom().getItems().get(itemNumber);
+            player1.buy(item);
+        } catch (NumberFormatException e) {
+            System.err.println("Could not parse item number" + command.getSecondWord());
+        }
     }
     
     /**
@@ -202,7 +227,7 @@ public class Game
      * @return nothing
      */
     private void printItemInfo() {
-        System.out.println(currentRoom.getItemDescription());
+        System.out.println(player1.getRoom().getItemDescription());
     }
 
     // implementations of user commands:
@@ -241,9 +266,9 @@ public class Game
             System.out.println("There is no where to go back to.");
             return;
         } else {
-            currentRoom = previousRoom.pop();
+            player1.setRoom(previousRoom.pop());
             printLocationInfo();
-            printItemInfo();
+            printWalletBalance();
         }
     }
             
@@ -262,16 +287,16 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        Room nextRoom = player1.getRoom().getExit(direction);
         
         if (nextRoom == null) {
             System.out.println("There is no door! You must be drunk!");
         }
         else {
-            previousRoom.push(currentRoom);
-            currentRoom = nextRoom;
+            previousRoom.push(player1.getRoom());
+            player1.setRoom(nextRoom);
             printLocationInfo();
-            printItemInfo();
+            printWalletBalance();
         }
     }
 
@@ -296,7 +321,7 @@ public class Game
      * @return nothing
      */
      private void printLocationInfo(){
-         System.out.println(currentRoom.getLongDescription());
+         System.out.println(player1.getRoom().getLongDescription());
     }
 
 }
