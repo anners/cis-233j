@@ -2,6 +2,7 @@
 
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.*;
+import org.junit.rules.ExpectedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +68,7 @@ public class PlayerTest
     }
     
     /**
-     * check inventory for the item
+     * check the nventory for an item
      *
      */
     @Test
@@ -83,6 +84,21 @@ public class PlayerTest
      */   
     @Test     
     public void drinkBeer() {
+        Item beer = new Item("beer", "a good Porter", 5.00);
+        room.addItem(beer);
+        player.buy(beer);
+        assertEquals("a good Porter", player.drink(beer.getName()));
+    }
+
+
+    /**
+     * check that drink method throws an exception when something other than
+     * beer is passed
+     */
+    @Test (expected = IllegalArgumentException.class)
+    public void throwsExceptionWhenBeerIsNotPassed() {
+        player.buy(item);
+        player.drink(item.getName());
     }
         
         

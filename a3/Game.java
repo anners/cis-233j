@@ -220,9 +220,8 @@ public class Game
     }
     
     /**
-     * stub method for drinking beer 
-     * for now it just prints out you aren't thristy 
-     * TODO - drink beer
+     * drink a beer 
+     * @param command - second command word is used for the beer to drink
      */
     private void drink (Command command) {
         if(!command.hasSecondWord()) {
