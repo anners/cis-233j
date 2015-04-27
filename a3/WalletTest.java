@@ -8,8 +8,8 @@ import org.junit.Test;
 /**
  * The test class WalletTest.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author  ann wallace
+ * @version 20150421
  */
 public class WalletTest
 {
@@ -27,17 +27,17 @@ public class WalletTest
        
         int expected = 6;
         wallet.removeMoney(4);
-        int actual = wallet.getMoney();
-        assertEquals(expected, actual);
+        double actual = wallet.getMoney();
+        assertEquals(expected, actual, 0);
     }
     
     @Test 
     public void addTenDollarsToWallet() {
        
-        int expected = 20;
+        double expected = 20;
         wallet.addMoney(10);
-        int actual = wallet.getMoney();
-        assertEquals(expected, actual);
+        double actual = wallet.getMoney();
+        assertEquals(expected, actual, 0);
     }
         
     /**

@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.params=
+comment0.target=PlayerTest()
+comment0.text=\n\ Default\ constructor\ for\ test\ class\ PlayerTest\n
+comment1.params=
+comment1.target=void\ setUp()
+comment1.text=\n\ Sets\ up\ the\ test\ fixture.\n\n\ Called\ before\ every\ test\ case\ method.\n
+comment2.params=
+comment2.target=void\ tearDown()
+comment2.text=\n\ Tears\ down\ the\ test\ fixture.\n\n\ Called\ after\ every\ test\ case\ method.\n
+comment3.params=
+comment3.target=void\ getName()
+comment3.text=\n\ test\ the\ name\ returns\ correctly\n
+comment4.params=
+comment4.target=void\ buyAnItemAndCheckWalletBalance()
+comment4.text=\n\ buy\ and\ item\ and\ make\ sure\ $5\ is\ removed\ from\ wallet\n
+comment5.params=
+comment5.target=void\ checkInventoryForIceCream()
+comment5.text=\n\ check\ inventory\ for\ the\ item\n\n
+comment6.params=
+comment6.target=void\ drinkBeer()
+comment6.text=\n\ check\ that\ you\ can\ drink\ beer\n
+numComments=7
