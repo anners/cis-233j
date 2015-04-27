@@ -27,9 +27,9 @@ public class Game
      */
     public Game() 
     {
+        player1 = new Player("Player 1");
         createRooms();
         parser = new Parser();
-        player1 = new Player("Player 1");
         previousRoom = new Stack<Room>();
     }
 
@@ -43,30 +43,30 @@ public class Game
         
       
         // create the rooms
-        work = new Room("inside your boring office");
-        pp = new Room("in a convenient store");
-        gdPub = new Room("in the green dragon pub");
-        gym = new Room("in the smelly gym");
-        bsPub = new Room("in the belmont station pub");
-        hbPub = new Room("in the horse brass pub");
-        aPub = new Room("in the apex pub");
-        home = new Room("in your house");
+        work = new Room("your boring office");
+        pp = new Room("convenient store");
+        gdPub = new Room("green dragon pub");
+        gym = new Room("the smelly gym");
+        bsPub = new Room("belmont station pub");
+        hbPub = new Room("horse brass pub");
+        aPub = new Room("apex pub");
+        home = new Room("your house");
         
         // create items
-        laptop = new Item("a macbook pro", 1000.00);
-        gum = new Item("a pack of gum", 1.00);
-        dmIPA = new Item("a double mountain IPA", 5.00);
-        clifBar = new Item("a Peanut Butter Clif Bar", 2.00);
-        cruxIPA = new Item("a Crux Double IPA", 8.00);
-        boneyardIPA = new Item("a Boneyard RPM", 4.00);
-        rrStout = new Item("a Russian River Stout", 6.50);
-        bed = new Item("a nice comfy bed", 0.00);
-        towel = new Item("a towel for the shower", 5.00);
+        laptop = new Item("laptop", "a macbook pro", 1000.00);
+        gum = new Item("gum", "a pack of gum", 1.00);
+        dmIPA = new Item("beer", "a double mountain IPA", 5.00);
+        clifBar = new Item("clifbar","a Peanut Butter Clif Bar", 2.00);
+        cruxIPA = new Item("beer","a Crux Double IPA", 8.00);
+        boneyardIPA = new Item("beer", "a Boneyard RPM", 4.00);
+        rrStout = new Item("beer","a Russian River Stout", 6.50);
+        bed = new Item("bed", "a nice comfy bed", 0.00);
+        towel = new Item("towel", "a towel for the shower", 5.00);
         
         
         //add items to rooms
         work.addItem(laptop);
-        pp.addItem( gum);
+        pp.addItem(gum);
         pp.addItem(clifBar);
         gdPub.addItem(dmIPA);
         gdPub.addItem(cruxIPA);
@@ -161,7 +161,10 @@ public class Game
             look();
         }
         else if (commandWord.equals("drink")) {
-            drink();
+            drink(command);
+        }
+        else if (commandWord.equals("inventory")) {
+            printInventory();
         }
         else if (commandWord.equals("buy")) {
             buy(command);
@@ -184,7 +187,6 @@ public class Game
     
     /**
      * Print out the current room description 
-     * exercise 6.14 - this is a duplication of printLocationInfo() BAD DESIGN 
      * @return nothing 
      */
     private void look () {
@@ -192,7 +194,8 @@ public class Game
     }
 
     /**
-     * stub method for buying an item
+     * buy an item from the current room and add it to the player's inventory
+     * @param - command second work is the number of the item to buy
      */
     private void buy (Command command) {
         if(!command.hasSecondWord()) {
@@ -205,8 +208,12 @@ public class Game
         int itemNumber;
         try { 
             itemNumber = Integer.parseInt(command.getSecondWord());
-            Item item = player1.getRoom().getItems().get(itemNumber);
-            player1.buy(item);
+            try {
+                Item item = player1.getRoom().getItems().get(itemNumber-1);
+                player1.buy(item);
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(itemNumber + " is not valid");
+            }
         } catch (NumberFormatException e) {
             System.err.println("Could not parse item number" + command.getSecondWord());
         }
@@ -217,8 +224,22 @@ public class Game
      * for now it just prints out you aren't thristy 
      * TODO - drink beer
      */
-    private void drink () {
-        System.out.println("You aren't thristy, try again later");
+    private void drink (Command command) {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know what item to buy...
+            System.out.println("Drink what?");
+            System.out.println("Please enter an item name");
+            System.out.println("Type inventory to see what you are carrying");
+            return;
+        } else {
+            try {
+                String itemName = command.getSecondWord();
+                String description = player1.drink(itemName);
+                System.out.println(player1.getName()+ " just drank " + description);
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
     
     /**
@@ -229,8 +250,15 @@ public class Game
     private void printItemInfo() {
         System.out.println(player1.getRoom().getItemDescription());
     }
+    
+    /**
+     * prints out the invetory of the player
+     * @return nothing
+     */
+    private void printInventory() {
+        System.out.println(player1.getInventoryString());
+    }
 
-    // implementations of user commands:
 
     /**
      * Print out some help information.
@@ -241,7 +269,14 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at work.");
+        System.out.println("around looking for bars to drink beer in");
+        System.out.println("until you finally make your way home.");
+        System.out.println();
+        System.out.println("Your goal is to buy a beer from each bar and drink it");
+        System.out.println("and to still have money in your wallet when you get home.");
+        System.out.println("You cannot have more than 1 beer in your inventory at a time.");
+        System.out.println("You cannot leave a bar with a beer in your inventory.");
+        System.out.println("You can thank the OLCC for this.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println(parser.showCommands());
@@ -323,5 +358,8 @@ public class Game
      private void printLocationInfo(){
          System.out.println(player1.getRoom().getLongDescription());
     }
+    
+    
+            
 
 }

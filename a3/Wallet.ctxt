@@ -1,14 +1,14 @@
 #BlueJ class context
 comment0.params=money
-comment0.target=Wallet(int)
+comment0.target=Wallet(double)
 comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Wallet\n\ @param\ money\ how\ much\ money\ is\ in\ the\ Wallet\n
 comment1.params=
-comment1.target=int\ getMoney()
+comment1.target=double\ getMoney()
 comment1.text=\n\ return\ the\ amount\ of\ money\ in\ the\ wallet.\ \n\ \n\ @return\ money\ -\ the\ current\ amount\ of\ money\ in\ the\ wallet\n
 comment2.params=cash
-comment2.target=void\ addMoney(int)
+comment2.target=void\ addMoney(double)
 comment2.text=\n\ Add\ cash\ to\ the\ wallet.\ \n\ \n\ @param\ \ cash\ \ the\ amount\ of\ money\ you\ want\ to\ add\ to\ your\ wallet\n\ @return\ \ void\n
 comment3.params=cash
-comment3.target=void\ removeMoney(int)
+comment3.target=void\ removeMoney(double)
 comment3.text=\n\ remove\ cash\ from\ the\ wallet.\ \n\ \n\ @param\ \ cash\ \ the\ amount\ of\ money\ you\ want\ to\ remove\ from\ your\ wallet\n\ @return\ \ void\n\ @throws\ XX\ if\ cash\ is\ >\ than\ money\ in\ the\ wallet\n
 numComments=4

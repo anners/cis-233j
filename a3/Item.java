@@ -10,6 +10,7 @@
 public class Item
 {
     // instance variables - replace the example below with your own
+    private String name;
     private String description;
     private double price;
 
@@ -17,11 +18,21 @@ public class Item
      * Constructor for objects of class Item
      * @param item - description of the item, price - how much the item cost
      */
-    public Item(String description, double price)
+    public Item(String name, String description, double price)
     {
         // initialise instance variables
+        this.name = name;
         this.description = description;
         this.price = price;
+    }
+    
+    /**
+     * Get the name of an item
+     * @return String - the name of an item
+     */
+    public String getName ()
+    {
+        return name;
     }
 
     /**

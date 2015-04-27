@@ -14,6 +14,7 @@ public class Player
     private Room currentRoom;
     private Wallet wallet;
     private HashMap<String, Item> inventory;
+    private OLCC olcc;
 
     /**
      * Constructor for objects of class Player
@@ -26,6 +27,7 @@ public class Player
         wallet = new Wallet(100);
         inventory = new HashMap<String, Item>();
         currentRoom = null;
+        olcc = new OLCC();
 
     }
 
@@ -68,35 +70,60 @@ public class Player
      * add an item to your inventory
      */
     private void addToInventory(Item item) {
-        inventory.put(currentRoom.getDescription(), item);
+        inventory.put(item.getName(), item);
     }
     
     /**
      * return all items in your inventory
+     * @return String of all the items in the Inventory 
      */
-    public void getInventoryString() {
-        String msg = new String("Inventory: ");
+    public String getInventoryString() {
+        String msg = new String("Inventory: \n");
         for (Map.Entry<String, Item> me : inventory.entrySet()) {
-            System.out.println("Key: "+me.getKey()+ " & Value: " + me.getValue().getDescription());
+            msg += " item: " + me.getKey()  + " description: " + me.getValue().getDescription() + "\n";
         }
+        return msg;
     }
             
     
     /**
      * buy item
+     * removes the item from the current room
+     * adds the item to your inventory
+     * deducts the price from your wallet
+     * @param Item that one wants to buy
      */
     public void buy(Item item) {
-        // remove item from room
-        // add item to inventory
-        addToInventory(item);
-        // remove money from wallet
+       // remove money from wallet
+       try { 
+            wallet.removeMoney(item.getPrice());
+            // remove item from room
+            currentRoom.removeItem(item);
+            // add item to inventory
+            addToInventory(item);
+        } catch (IllegalArgumentException e) {
+            System.err.println("You don't have enough money to purchase " + item.getDescription());
+        }
+
+
     }
     
     /**
-     * drink
+     * drink a beer and remove it from the inventory
+     * @param a beer one wants to drink
+     * @return description of the item drank
+     * @throws IllegalArgumentException - if something other than a beer is passed
      */
-    public void drink() {
+    public String drink(String itemName) {
+        Item item = inventory.get(itemName);
+        //check to make sure you are drinking a beer
+        if (!olcc.isABeer(item)) {
+           // throw an exception if not a beer
+            throw new IllegalArgumentException("Cannot drink " + itemName);
+        } 
         // drink beer and remove it from the inventory
+        inventory.remove(item.getName());
+        return item.getDescription();
     }
 
 }

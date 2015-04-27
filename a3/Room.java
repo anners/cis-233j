@@ -62,6 +62,14 @@ public class Room
     }
     
     /**
+     * Remove an item for a room 
+     * @param item - the item to remove
+     */
+    public void removeItem(Item rmItem) {
+        items.remove(rmItem);
+    }
+    
+    /**
      * Return all the items in a room
      * @return a list of items
      */
@@ -122,7 +130,7 @@ public class Room
      * @return a description of the room, including exits
      */
     public String getLongDescription() {
-        return "you are " + description + ".\n" + getExitString() + 
+        return "you are in " + description + ".\n" + getExitString() + 
         "\n" + getItemDescription();
     }
 
